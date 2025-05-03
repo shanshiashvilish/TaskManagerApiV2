@@ -17,4 +17,8 @@
       <ProjectReference Include="..\TaskManagerApiV2.Domain\TaskManagerApiV2.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Extensions\" />
+    </ItemGroup>
+
 </Project>
