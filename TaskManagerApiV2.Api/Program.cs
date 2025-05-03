@@ -4,11 +4,13 @@ using TaskManagerApiV2.Persistence.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Add application services
 builder.Services.AddApplicationServices();
+builder.Services.AddDatabase();
 builder.Services.AddRepositories();
 
 var app = builder.Build();
