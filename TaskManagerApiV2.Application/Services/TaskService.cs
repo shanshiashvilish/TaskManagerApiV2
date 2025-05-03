@@ -27,7 +27,7 @@ public class TaskService(ITaskRepository taskRepository, IUserService userServic
 
             if (chosenUserId != Guid.Empty)
             {
-                AssignTask(task, chosenUserId);
+                await AssignTask(task, chosenUserId);
                 logger.LogInformation("Task '{Title}' assigned to user {UserId} on creation.", title, chosenUserId);
             }
         }
@@ -74,7 +74,7 @@ public class TaskService(ITaskRepository taskRepository, IUserService userServic
             }
 
             var newUser = eligibleUsers.OrderBy(_ => Guid.NewGuid()).First();
-            AssignTask(task, newUser.Id);
+            await AssignTask(task, newUser.Id);
             logger.LogInformation("Task '{TaskId}' reassigned to user {UserId}.", task.Id, newUser.Id);
         }
 
@@ -104,6 +104,7 @@ public class TaskService(ITaskRepository taskRepository, IUserService userServic
 
     private async Task AssignTask(TaskItem task, Guid userId)
     {
+        ArgumentNullException.ThrowIfNull(task);
         task.AssignedUserId = userId;
         task.State = TaskState.InProgress;
 
@@ -113,6 +114,7 @@ public class TaskService(ITaskRepository taskRepository, IUserService userServic
 
     private static void UnassignTask(TaskItem task, TaskState state)
     {
+        ArgumentNullException.ThrowIfNull(task);
         task.AssignedUserId = null;
         task.State = state;
     }

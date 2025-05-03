@@ -12,9 +12,4 @@ public class UserRepository(AppDbContext dbContext) : RepositoryBase<User>(dbCon
     {
         return await _db.Users.AnyAsync(u => u.Name == name, cancellationToken);
     }
-
-    public new async Task<List<User>> GetAllAsync(CancellationToken cancellationToken = default)
-    {
-        return await _db.Users.ToListAsync(cancellationToken);
-    }
 }
