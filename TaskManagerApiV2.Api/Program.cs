@@ -1,4 +1,5 @@
 using TaskManagerApiV2.Application.Extensions;
+using TaskManagerApiV2.BackgroundJobs;
 using TaskManagerApiV2.Persistence.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Add application services
+builder.Services.AddHostedService<TaskReassignmentBackgroundService>();
 builder.Services.AddApplicationServices();
 builder.Services.AddDatabase();
 builder.Services.AddRepositories();
