@@ -41,7 +41,7 @@ public class TaskService(ITaskRepository taskRepository, IUserService userServic
 
     public async Task ReassignTasksAsync()
     {
-        var tasks = await taskRepository.GetUncompletedAsync();
+        var tasks = (await GetAllAsync()).Where(t => t.State != TaskState.Completed);
         var allUsers = await userService.GetAllAsync();
 
         foreach (var task in tasks)
@@ -63,7 +63,7 @@ public class TaskService(ITaskRepository taskRepository, IUserService userServic
             }
 
             var eligibleUsers = allUsers
-                .Where(u => u.Id != currentUserId && u.Id != previousUserId)
+                .Where(u => u.Id != currentUserId && u.Id != previousUserId && !pastUserIds.Contains(u.Id))
                 .ToList();
 
             if (eligibleUsers.Count == 0)
@@ -90,6 +90,7 @@ public class TaskService(ITaskRepository taskRepository, IUserService userServic
     {
         return await taskRepository.GetHistoryAsync(taskId);
     }
+
 
     #region Private
 
