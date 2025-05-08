@@ -18,4 +18,9 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ITaskRepository, TaskRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
     }
+
+    public static void AddSeederServices(this IServiceCollection services)
+    {
+        services.AddScoped<Seeder>();
+    }
 }

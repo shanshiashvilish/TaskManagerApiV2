@@ -14,8 +14,16 @@ builder.Services.AddHostedService<TaskReassignmentBackgroundService>();
 builder.Services.AddApplicationServices();
 builder.Services.AddDatabase();
 builder.Services.AddRepositories();
+builder.Services.AddSeederServices();
 
 var app = builder.Build();
+
+// DB seeding logic
+using (var scope = app.Services.CreateScope())
+{
+    var seeder = scope.ServiceProvider.GetRequiredService<Seeder>();
+    seeder.Seed();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
