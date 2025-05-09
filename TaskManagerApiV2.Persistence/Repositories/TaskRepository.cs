@@ -32,7 +32,8 @@ public class TaskRepository(AppDbContext dbContext, IUserRepository userReposito
         await _dbContext.TaskTransferHistories.AddAsync(new TaskTransferHistory
         {
             TaskId = taskId,
-            UserId = userId
+            UserId = userId,
+            TransferredAt = DateTime.UtcNow
         });
     }
 
